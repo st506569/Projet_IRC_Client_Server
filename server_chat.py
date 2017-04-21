@@ -23,11 +23,11 @@ if __name__ == '__main__':
 	
 	liste_connect = []
 	buff = 4096
-	port = 50000
+	port = 5000
 
 	server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-	server_socket.bind(("0.0.0.0",port))
+	server_socket.bind(("127.0.0.1",port))
 	server_socket.listen(10)
 
 	liste_connect.append(server_socket)
@@ -36,14 +36,14 @@ if __name__ == '__main__':
 
 	while 1:
 
-		read_sockets, write_sockets,error_sockets = select.select(liste_connect, [], [])
+		read_sockets, write_sockets,error_sockets = select.select(liste_connect, [], [],60)
 
 		for sock in read_sockets:
 
 			if sock == server_socket:
 				sockfd, addr, = server_socket.accept()
 				liste_connect.append(sockfd)
-				print "Client (%S, %s) connected "%(addr)
+				print "Client (%s, %s) connected "%(addr)
 
 				diffussion_msg(sockfd, "[%s:%s] est dans la discussion\n" % addr)
 			else :

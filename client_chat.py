@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	while 1:
 		socket_list = [sys.stdin, s]
 
-		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
+		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [],60)
 
 		for sock_ready in read_sockets:
 
